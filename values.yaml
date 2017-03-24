@@ -6,48 +6,7 @@
 pod:
   ## The image to use with the resource
   ## Ref: https://quay.io/repository/littlemanco/apache-php
-  image:
-  ## Host networking requested for this pod. Use the host’s network namespace. If this option is set, the ports that
-  ## will be used must be specified.
-  ## Ref: https://kubernetes.io/docs/api-reference/v1/definitions/#_v1_podspec
-  hostNetwork: false
-  ## Use the host’s pid namespace
-  ## Ref: https://kubernetes.io/docs/api-reference/v1/definitions/#_v1_podspec
-  hostPID: false
-
-securityContext:
-## Whether the container should be run in "privileged" mode (essentially, root on the host)
-## Ref: http://kubernetes.io/docs/api-reference/v1/definitions/#_v1_securitycontext
-## Default: false
-  privileged:
-
-service:
-  ## What scope the service should be exposed in. One of:
-  ## - LoadBalancer (to the world)
-  ## - ClusterIP (to the cluster)
-  ## - NodePort (to the world, in a custom way)
-  type: "LoadBalancer"
-  ## If there is a port associated with a given service, expose it here.
-  # port:
-  ## If there is a particular IP that should be used for the service, specify it here.
-  ## Note: It's quite unlikely that an IP should be specific. Normally, the best thing to do is leave it to Kubernetes
-  ##       to allocate a free IP from the pool.
-  ## Default: Automatically assign a random IP
-  # privateIp:
-  ## Only relevant if the `type` above is "LoadBalancer"
-  loadBalancer:
-    ## If there is already a reserved public IP that this load balancer should use, indicate it here.
-    ## Default: Automatically assign a random, ephemeral IP
-    # publicIp:
-    ## If there should be firewall rules restricting the load balancer to a limited set of IPs, specify those IPs below
-    ## in CIDR format. If all IPs shoud be allowed access, set the CIDR as "0.0.0.0/0"
-    allowedIps:
-      - "0.0.0.0/0"
-    ## If there is a Hostname associated with this site, add it here and it will be rendered in the documentation.
-    # hostName:
-
-## How many versions of this service to run on kubernetes
-replicas: 1
+  image: "buoyantio/linkerd:0.9.1-32b"
 
 ## More generally, a "request" can be thought of as "how much is this container expected to need usually". it should be
 ## possible to burst outside these constraints (during a high load operation). However, Kubernetes may kill the pod
@@ -67,7 +26,7 @@ resources:
     ## How much CPU this container is expected to need
     cpu: "100m"
     ## How much memory this container is expected to need.
-    memory: "512Mi"
+    memory: "128Mi"
   limits:
     ## The max CPU this container should be allowed to use
     # cpu: "100m"

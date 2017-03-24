@@ -33,13 +33,4 @@ spec:
       hostPort: 9990
       protocol: "TCP"
       name: "Admin"
-  type: {{ default "ClusterIP" .Values.service.type }}
-  {{ if eq .Values.service.type "LoadBalancer" -}}
-  {{ if .Values.service.loadBalancer.publicIp -}}
-  loadBalancerIP: {{ .Values.service.loadBalancer.publicIp }}
-  {{ if .Values.service.loadBalancer.allowedIps -}}
-  loadBalancerSourceRanges:
-{{ .Values.service.loadBalancer.allowedIps | toYaml | indent 4 }}
-  {{ end -}}
-  {{ end -}}
-  {{ end -}}
+  type: "ClusterIP"
