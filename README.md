@@ -1,10 +1,10 @@
-# __NAME__
+# Linkerd
 
 ## Installation
 
 ```
     # Todo: Document any required values, if they exist.
-    $ helm upgrade --install path/to/__NAME__ __NAME__
+    $ helm upgrade --install path/to/linkerd linkerd
 ```
 
 ## Usage
