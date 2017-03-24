@@ -9,6 +9,8 @@ metadata:
     release: "{{ .Release.Name }}"
   name: {{ template "linkerd.fullname" . }}
 data:
+  # Todo: Think about whether it's a good idea to replace this in a giant if block, so whomever is consuming it can
+  # replace the config should they so desire.
   config.yaml: |-
     admin:
       port: 9990
