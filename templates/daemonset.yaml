@@ -12,7 +12,6 @@ spec:
   template:
     metadata:
       annotations:
-        ##
         ## Oftentimes, applicatins need to be restarted once once thier configuration has been updated. However,
         ## Kubernetes makes the assumption that watching the file for configuration change is the applications
         ## responsibiliy, and doesn't restart when files change. So, the lines below modify a propery that does trigger
@@ -154,19 +153,18 @@ spec:
                 # - "WAKE_ALARM"
                 # - "BLOCK_SUSPEND"
           ports:
-            ## The container port to expose, and how to expose it. Possible values are any valid port number. You
-            ## probably want to expose your application port, though.
-            ##
-            ## See http://kubernetes.io/docs/api-reference/v1/definitions/#_v1_containerport
-            - containerPort: __CONTAINER_PORT__
-              ## What protocol the port uses. Possible values are:
-              # - "TCP"
-              # - "UDP"
-              protocol: "__CONTAINER_PORT_PROTOCOL__"
-              {{- if pod.hostPID -}}
-              hostPort: __CONTAINER_PORT__
-              {{- end }}
-              name: "__CONTAINER_PORT_NAME__"
+            - containerPort: 4141
+              hostPort: 4141
+              protocol: "TCP"
+              name: "Incoming"
+            - containerPort: 4140
+              hostPort: 4140
+              protocol: "TCP"
+              name: "Outgoing"
+            - containerPort: 9990
+              hostPort: 9990
+              protocol: "TCP"
+              name: "Admin"
           # volumeMounts:
           #   - name: "nodeexporter-etc-conf-d"
           #     readOnly: true

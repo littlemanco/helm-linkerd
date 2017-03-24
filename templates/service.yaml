@@ -21,9 +21,18 @@ spec:
     app: {{ template "linkerd.fullname" . }}
     release: "{{ .Release.Name }}"
   ports:
-    - protocol: "__CONTAINER_PORT_PROTOCOL__"
-      name: "__CONTAINER_PORT_NAME__"
-      port: __CONTAINER_PORT__
+    - containerPort: 4141
+      hostPort: 4141
+      protocol: "TCP"
+      name: "Incoming"
+    - containerPort: 4140
+      hostPort: 4140
+      protocol: "TCP"
+      name: "Outgoing"
+    - containerPort: 9990
+      hostPort: 9990
+      protocol: "TCP"
+      name: "Admin"
   type: {{ default "ClusterIP" .Values.service.type }}
   {{ if eq .Values.service.type "LoadBalancer" -}}
   {{ if .Values.service.loadBalancer.publicIp -}}
