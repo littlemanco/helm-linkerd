@@ -73,6 +73,7 @@ Contributions are always welcome! Nothing is too small, and the best place to st
 
 ## References
 
+- BuoyantIO/linkerd-examples, from https://github.com/BuoyantIO/linkerd-examples/blob/master/k8s-daemonset/k8s/linkerd.yml
 - A Service Mesh for Kubernetes, Part I: Top-line service metrics, from https://blog.buoyant.io/2016/10/04/a-service-mesh-for-kubernetes-part-i-top-line-service-metrics/
 - Lingoes.net,. (2015). Language Code Table. Retrieved 4 June 2015, from http://www.lingoes.net/en/translator/langcode.htm
 - GitHub, (2015). Proposed: security disclosure publication. Retrieved 15 May 2016, from https://github.com/php-fig/fig-standards/blob/master/proposed/security-disclosure-publication.md
