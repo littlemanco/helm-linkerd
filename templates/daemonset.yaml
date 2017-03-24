@@ -98,47 +98,6 @@ spec:
           #   - "arguments"
           resources:
 {{ toYaml .Values.resources | indent 12 }}
-          securityContext:
-            privileged: {{ default false .Values.securityContext.privileged }}
-            # capabilities:
-              # add:
-                # - "SETPCAP"
-                # - "SYS_MODULE"
-                # - "SYS_RAWIO"
-                # - "SYS_PACCT"
-                # - "SYS_ADMIN"
-                # - "SYS_NICE"
-                # - "SYS_RESOURCE"
-                # - "SYS_TIME"
-                # - "SYS_TTY_CONFIG"
-                # - "MKNOD"
-                # - "AUDIT_WRITE"
-                # - "AUDIT_CONTROL"
-                # - "MAC_OVERRIDE"
-                # - "MAC_ADMIN"
-                # - "NET_ADMIN"
-                # - "SYSLOG"
-                # - "CHOWN"
-                # - "NET_RAW"
-                # - "DAC_OVERRIDE"
-                # - "FOWNER"
-                # - "DAC_READ_SEARCH"
-                # - "FSETID"
-                # - "KILL"
-                # - "SETGID"
-                # - "SETUID"
-                # - "LINUX_IMMUTABLE"
-                # - "NET_BIND_SERVICE"
-                # - "NET_BROADCAST"
-                # - "IPC_LOCK"
-                # - "IPC_OWNER"
-                # - "SYS_CHROOT"
-                # - "SYS_PTRACE"
-                # - "SYS_BOOT"
-                # - "LEASE"
-                # - "SETFCAP"
-                # - "WAKE_ALARM"
-                # - "BLOCK_SUSPEND"
           ports:
             - containerPort: 4141
               hostPort: 4141
@@ -258,19 +217,5 @@ spec:
           # readinessProbe:
           ##
           ## __LIVENESS_PROBE__
-      ## Whether to restart this pod. Possible values are:
-      ## - Always (Sensible Default)
-      ## - OnFailure
-      ## - Never
-      ##
-      ## For more information, see http://kubernetes.io/docs/user-guide/pod-states/#restartpolicy
-      restartPolicy: "__RESTART_POLICY__"
-      securityContext:
-        ## Volumes which support ownership management are modified to be owned and writable by the GID specified in
-        ## fsGroup. See the Ownership Management design document for more details.
-        ## See: https://github.com/kubernetes/community/blob/master/contributors/design-proposals/
-        ##      volume-ownership-management.md
-        # fsGroup: 1000
-        ## A list of groups applied to the first process run in each container, in addition to the container’s primary
-        ## GID. If unspecified, no groups will be added to any container.
-        # supplementalGroups: [1000]
+      ## See http://kubernetes.io/docs/user-guide/pod-states/#restartpolicy
+      restartPolicy: "Always"
