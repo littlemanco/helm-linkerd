@@ -1,28 +1,12 @@
 linkerd
 
-## Accessing linkerd
-----------------------
-{{ if .Values.service.loadBalancer.hostName }}
-1. Visit http://{{ .Values.service.loadBalancer.hostName }}
-{{- else }}
+Accessing linkerd
+-----------------
+
 1. Get the linkerd URL to visit by running these commands in the same shell:
-{{- if contains "NodePort" .Values.service.type }}
-  export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ template "linkerd.fullname" . }})
-  export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
-  echo http://$NODE_IP:$NODE_PORT/login
 
-{{- else if contains "LoadBalancer" .Values.service.type }}
-  NOTE: It may take a few minutes for the loadBalancer IP to be available.
-        You can watch the status of by running 'kubectl get svc --namespace {{ .Release.Namespace }} -w {{ template "linkerd.fullname" . }}'
-  export SERVICE_IP=$(kubectl get svc {{ template "linkerd.fullname" . }} --namespace {{ .Release.Namespace }} --template "{{"{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"}}")
-  echo http://$SERVICE_IP:{{ .Values.service.port }}/login
-
-{{- else if contains "ClusterIP"  .Values.service.type }}
   export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "component={{ template "linkerd.fullname" . }}-master" -o jsonpath="{.items[0].metadata.name}")
   echo http://127.0.0.1:{{ .Values.service.port }}
-  kubectl port-forward $POD_NAME {{ .Values.service.port }}:{{ .Values.service.port }}
-
-{{- end }}
-{{- end }}
+  kubectl port-forward $POD_NAME 9990:9990
 
 For more information, check the readme!
