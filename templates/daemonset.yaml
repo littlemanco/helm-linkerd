@@ -12,76 +12,17 @@ spec:
   template:
     metadata:
       annotations:
-        ## Oftentimes, applicatins need to be restarted once once thier configuration has been updated. However,
-        ## Kubernetes makes the assumption that watching the file for configuration change is the applications
-        ## responsibiliy, and doesn't restart when files change. So, the lines below modify a propery that does trigger
-        ## a rotation of the applications so they are restarted when their dependencies change.
-        ##
         ## See https://github.com/kubernetes/helm/blob/master/docs/charts_tips_and_tricks.md
-        ##   #automatically-roll-deployments-when-configmaps-or-secrets-change
-        ##
-        # checksum/config: {{ include (print $.Chart.Name "/templates/secret.yaml") . | sha256sum }}
-        # checksum/config: {{ include (print $.Chart.Name "/templates/configmap.yaml") . | sha256sum }}
+        ##   #automatically-roll-deployments-when-configmaps-or-se  crets-change
+        checksum/config: {{ include (print $.Chart.Name "/templates/configmap.yaml") . | sha256sum }}
       labels:
         app: {{ template "linkerd.fullname" . }}
         release: "{{ .Release.Name }}"
     spec:
-      ## Volumes are how Kubernetes expresses either networked storage or other metadata in the filesystem. There are
-      ## storage types, the most useful of which are illustrated below. Remember to uncomment the volumes: node if you
-      ## decide to use them!
-      ##
-      # volumes:
-      ##
-      ## EMPTY DIR - Useful for scratch space, such as for CI
-      ##
-      #   - name: "__VOLUME_NAME__"
-      #     emptyDir: {}
-      ##
-      ## HOST PATH - Useful when mounting some host proprty into hte container
-      ##
-      #   - name: "__VOLUME_NAME__"
-      #     hostPath:
-      #       path: "/path/to/your/folder"
-      ##
-      ## PERSISTENT VOLUME CLAIM - Useful to access network storage. Should be used in preference to GcePersistantDisk
-      ##                           et. al. You will need to define a persistent volume as well, for this to work.
-      ##
-      #   - name: "__VOLUME_NAME__"
-      #     persistentVolumeClaim:
-      #       claimName: {{ template "linkerd.pvcName" . }}
-      ##
-      ## CONFIGMAP
-      ##
-      #   - name: "__VOLUME_NAME__"
-      #     configMap:
-      #       name: "__CONFIGMAP_NAME__"
-      ##
-      ## Note: You can also use single files from a configmap, with a syntax called "subPath". An example is below:
-      ##
-      #   - name: "__VOLUME_NAME__"
-      #     configMap:
-      #       name: "__CONFIGMAP_NAME__"
-      #       items:
-      #         - key: "__ITEM_KEY__"
-      #           path: "path/to/item"
-      ##
-      ## SECRET
-      ##
-      #   - name: "__VOLUME_NAME__"
-      #     secret:
-      #       secretName: "__SECRET_NAME__"
-      ##
-      ## DOWNWARD API
-      ##
-      #   - name: "__VOLUME_NAME__"
-      #     downwardAPI:
-      #       items:
-      #         - path: "labels"
-      #           fieldRef:
-      #             fieldPath: metadata.labels
-      #         - path: "annotations"
-      #           fieldRef:
-      #             fieldPath: metadata.annotations
+      volumes:
+        - name: {{ template "linkerd.fullname" . }}
+          configMap:
+            name: {{ template "linkerd.fullname" . }}
       hostNetwork: {{ default false .Values.pod.hostNetwork }}
       hostPID: {{ default false .Values.pod.hostPID }}
       containers:
@@ -92,10 +33,8 @@ spec:
                 fieldRef:
                   fieldPath: "status.podIP"
           image: {{ .Values.pod.image | quote }}
-          # args:
-          #   - "command"
-          #   - "line"
-          #   - "arguments"
+          args:
+            - "/io.buoyant/linkerd/config/config.yaml"
           resources:
 {{ toYaml .Values.resources | indent 12 }}
           ports:
@@ -111,13 +50,10 @@ spec:
               hostPort: 9990
               protocol: "TCP"
               name: "Admin"
-          # volumeMounts:
-          #   - name: "nodeexporter-etc-conf-d"
-          #     readOnly: true
-          #     mountPath: "/etc/nodeexporter/conf.d"
-          #   - name: "nodeexporter-data
-          #     readOnly: false
-          #     mountPath: "/data"
+          volumeMounts:
+            - name: {{ template "linkerd.fullname" . }}
+              readOnly: true
+              mountPath: "/io.buoyant/linkerd/config"
           ## There are three types or readiness probes:
           ##
           ## More generally, a liveness probe is used to determine whether the application is "healthy" and should
