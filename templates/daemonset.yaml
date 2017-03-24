@@ -86,24 +86,11 @@ spec:
       hostPID: {{ default false .Values.pod.hostPID }}
       containers:
         - name: {{ template "linkerd.name" }}
-          ## Environment variables can be populated in a number of ways, including secrets, or just string values. Below
-          ## are some examples for you to copy-paste. Remember to uncomment the `env` node!
-          #
-          # env:
-          #
-          ## An example of a simple key value pair
-          #
-          # - name: "FOO"
-          #   value: "BAR"
-          #
-          ## An example of environment variables from a secret
-          #
-          # - name: "SECRET"
-          #   valueFrom:
-          #     secretKeyRef:
-          #       name: __SECRET_NAME__
-          #       key: __KEY_USED_IN_SECRET_NAME__
-          #
+          env:
+            - name: "POD_IP"
+              valueFrom:
+                fieldRef:
+                  fieldPath: "status.podIP"
           image: {{ .Values.pod.image | quote }}
           # args:
           #   - "command"
