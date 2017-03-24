@@ -3,8 +3,13 @@ kind: "Service"
 apiVersion: "v1"
 metadata:
   annotations:
-    prometheus.io/scrape: "{{ .Values.monitoring.service.scrape }}"
-    {{ if eq .Values.service.type "LoadBalancer" }}service.beta.kubernetes.io/external-traffic: "OnlyLocal"{{ end }}
+    ## These annontations mark the service as monitorable by Prometheus, both directly as a service level metric and
+    ## via the blackbox exporter. For more information, see
+    ## values.yaml
+    prometheus.io/scrape: {{ .Values.monitoring.service.scrape | quote }}
+    prometheus.io/probe: {{ .Values.monitoring.service.probe | quote }}
+    prometheus.io/path: {{ .Values.monitoring.service.path | quote }}
+    prometheus.io/port: "9990"
   labels:
     app: {{ template "linkerd.fullname" . }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
