@@ -2,7 +2,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{define "linkerd.name"}}{{default "__CHART__" .Values.nameOverride | trunc 63 | trimSuffix "-" }}{{end}}
+{{define "linkerd.name"}}{{default "linkerd" .Values.nameOverride | trunc 63 | trimSuffix "-" }}{{end}}
 
 {{/*
 Create a default fully qualified app name.
