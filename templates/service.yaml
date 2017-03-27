@@ -21,16 +21,13 @@ spec:
     app: {{ template "linkerd.fullname" . }}
     release: "{{ .Release.Name }}"
   ports:
-    - containerPort: 4141
-      port: 4141
+    - port: 4141
       protocol: "TCP"
       name: "Incoming"
-    - containerPort: 4140
-      port: 4140
+    - port: 4140
       protocol: "TCP"
       name: "Outgoing"
-    - containerPort: 9990
-      port: 9990
+    - port: 9990
       protocol: "TCP"
       name: "Admin"
   type: "ClusterIP"
