@@ -23,11 +23,11 @@ spec:
   ports:
     - port: 4141
       protocol: "TCP"
-      name: "Incoming"
+      name: "incoming"
     - port: 4140
       protocol: "TCP"
-      name: "Outgoing"
+      name: "outgoing"
     - port: 9990
       protocol: "TCP"
-      name: "Admin"
+      name: "admin"
   type: "ClusterIP"

@@ -57,14 +57,14 @@ spec:
           livenessProbe:
             tcpSocket:
               port: "admin"
-              initialDelaySeconds: 5
-              timeoutSeconds: 1
-              failureThreshold: 3
+            initialDelaySeconds: 5
+            timeoutSeconds: 1
+            failureThreshold: 3
           readinessProbe:
             tcpSocket:
               port: "admin"
-              initialDelaySeconds: 5
-              timeoutSeconds: 1
-              failureThreshold: 3
+            initialDelaySeconds: 5
+            timeoutSeconds: 1
+            failureThreshold: 3
       ## See http://kubernetes.io/docs/user-guide/pod-states/#restartpolicy
       restartPolicy: "Always"
