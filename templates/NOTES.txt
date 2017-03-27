@@ -6,7 +6,7 @@ Accessing linkerd
 1. Get the linkerd URL to visit by running these commands in the same shell:
 
   export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "component={{ template "linkerd.fullname" . }}-master" -o jsonpath="{.items[0].metadata.name}")
-  echo http://127.0.0.1:{{ .Values.service.port }}
+  echo http://127.0.0.1:9990
   kubectl port-forward $POD_NAME 9990:9990
 
 For more information, check the readme!
