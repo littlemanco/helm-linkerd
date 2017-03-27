@@ -21,11 +21,7 @@ This is not used in production anywhere, it's just a learning experience.
 
 ## Alerting Policies
 
-Note: These have yet to be tested.
-
-| Policy                  | Description |
-|-------------------------|-------------|
-|                         |             |
+See MONITORING.md
 
 ## Security Alerts
 
@@ -41,9 +37,9 @@ See SECURITY.md
 
 ### Kubernetes
 
-| 1.5 | 1.4 | 1.3 | 1.2 | 1.1 | 1.0
-|-----|-----|-----|-----|-----|----
-|  Y  |  ?  |  ?  |  ?  |  ?  |  ?
+| 1.5 | 1.4 | 1.3 | 1.2 | 1.1 | 1.0 |
+|-----|-----|-----|-----|-----|-----|
+|  Y  |  ?  |  ?  |  ?  |  ?  |  ?  |
 
 ### Linkerd
 
@@ -55,6 +51,16 @@ This is tested on whatever version is in values.yaml; nothing more.
 Install it with Helm:
 
     helm upgrade --install linkerd path/to/chart
+
+### Metrics
+
+Linkerd exposes metrics in the Prometheus format. By default, this chart will add the additional annotations that
+Prometheus expects (based on the example configuration) so it will automatically discover the service and save
+its exported metrics.
+
+To disable this, install the chart with:
+
+    helm upgrade --install --set="monitoring.service.scrape=false" linkerd path/to/chart
 
 ## Usage
 
