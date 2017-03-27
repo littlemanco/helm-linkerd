@@ -23,7 +23,7 @@ This is not used in production anywhere, it's just a learning experience.
 
 See MONITORING.md
 
-## Security Alerts
+## Security
 
 See SECURITY.md
 
@@ -37,6 +37,8 @@ See SECURITY.md
 
 ### Kubernetes
 
+Tested on GKE, with beta APIs enabled
+
 | 1.5 | 1.4 | 1.3 | 1.2 | 1.1 | 1.0 |
 |-----|-----|-----|-----|-----|-----|
 |  Y  |  ?  |  ?  |  ?  |  ?  |  ?  |
@@ -45,22 +47,42 @@ See SECURITY.md
 
 This is tested on whatever version is in values.yaml; nothing more.
 
-## Installation
+## Installing the Chart
+
+To install the chart with the release name `my-release`:
+
+```console
+$ helm install --name my-release path/to/chart/
+```
+
+The command deploys linkerd on the Kubernetes cluster in the default configuration. The [configuration](#configuration)
+section lists the parameters that can be configured during installation.
+
+> **Tip**: List all releases using `helm list`
+
+## Upgrading the CHart
+
+The chart deploys a DaemonSet (DS) object onto the cluster. Unfortunately, there is currently no way to upgrade a DS
+(unless you're on Kubernetes 1.6, for which this chart is untested). You will have to delete the DS and reprovision it.
 
 
-Install it with Helm:
+## Uninstalling the Chart
 
-    helm upgrade --install linkerd path/to/chart
+To uninstall/delete the `my-release` deployment:
 
-### Metrics
+```console
+$ helm delete my-release
+```
 
-Linkerd exposes metrics in the Prometheus format. By default, this chart will add the additional annotations that
-Prometheus expects (based on the example configuration) so it will automatically discover the service and save
-its exported metrics.
+The command removes all the Kubernetes components associated with the chart and deletes the release.
 
-To disable this, install the chart with:
+## Configuration
 
-    helm upgrade --install --set="monitoring.service.scrape=false" linkerd path/to/chart
+The following tables lists the configurable parameters of the aws-cluster-autoscaler chart and their default values.
+
+| Parameter      | Description                                                                        | Default       |
+|----------------|------------------------------------------------------------------------------------|---------------|
+| `nameOverride` | name of the chart                                                                  | `linkerd`     |
 
 ## Usage
 
