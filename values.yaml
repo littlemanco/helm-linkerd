@@ -5,7 +5,7 @@
 
 pod:
   ## The image to use with the resource
-  ## Ref: https://quay.io/repository/littlemanco/apache-php
+  ## Ref: https://hub.docker.com/r/boyantio/linkerd
   image: "buoyantio/linkerd:0.9.1-32b"
 
 ## More generally, a "request" can be thought of as "how much is this container expected to need usually". it should be
