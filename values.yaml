@@ -7,7 +7,7 @@ kubectl:
   pod:
     ## The image used for the kubectl container in this pod
     ## Ref: https://quay.io/repository/littlemanco/kubectl
-    image: "quay.io/littlemanco/kubectl:v1.6.0-1"
+    image: "quay.io/littlemanco/kubectl:v1.6.0-2"
 
 pod:
   ## The image to use with the resource
