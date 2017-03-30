@@ -26,7 +26,14 @@ spec:
       hostNetwork: {{ default false .Values.pod.hostNetwork }}
       hostPID: {{ default false .Values.pod.hostPID }}
       containers:
-        - name: {{ template "linkerd.name" }}
+        # The kubectl container, required
+        - name: "kubectl"
+          image: {{ .Values.kubectl.pod.image | quote }}
+          args:
+            - "proxy"
+            - "--port"
+            - "8001"
+        - name: "linkerd"
           env:
             - name: "POD_IP"
               valueFrom:

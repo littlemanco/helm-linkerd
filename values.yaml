@@ -3,6 +3,12 @@
 ## Default: use the chart name
 # nameOverride:
 
+kubectl:
+  pod:
+    ## The image used for the kubectl container in this pod
+    ## Ref: https://quay.io/repository/littlemanco/kubectl
+    image: "quay.io/littlemanco/kubectl:v1.6.0-1"
+
 pod:
   ## The image to use with the resource
   ## Ref: https://hub.docker.com/r/boyantio/linkerd
