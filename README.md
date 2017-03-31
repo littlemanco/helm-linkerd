@@ -55,8 +55,9 @@ To install the chart with the release name `my-release`:
 $ helm install --name my-release path/to/chart/
 ```
 
-The command deploys linkerd on the Kubernetes cluster in the default configuration. The [configuration](#configuration)
-section lists the parameters that can be configured during installation.
+The command deploys linkerd on the Kubernetes cluster in the default configuration. The values.yaml file lists all
+configuration that can be varied during install, and the [configuration](#configuration) section details how to
+override this configuration.
 
 > **Tip**: List all releases using `helm list`
 
