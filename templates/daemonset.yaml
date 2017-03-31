@@ -28,22 +28,23 @@ spec:
       containers:
         # The kubectl container, required
         - name: "kubectl"
-          image: {{ .Values.kubectl.pod.image | quote }}
+          image: {{ .Values.pod.kubectl.image | quote }}
           args:
             - "proxy"
             - "--port"
             - "8001"
+{{ toYaml .Values.pod.kubectl.resources }}
         - name: "linkerd"
           env:
             - name: "POD_IP"
               valueFrom:
                 fieldRef:
                   fieldPath: "status.podIP"
-          image: {{ .Values.pod.image | quote }}
+          image: {{ .Values.pod.linkerd.image | quote }}
           args:
             - "/io.buoyant/linkerd/config/config.yaml"
           resources:
-{{ toYaml .Values.resources | indent 12 }}
+{{ toYaml .Values.pod.linkerd.resources | indent 12 }}
           ports:
             - containerPort: 4141
               hostPort: 4141
